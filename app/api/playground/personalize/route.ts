@@ -8,7 +8,6 @@ import { getServerSupabase } from "@/lib/supabase-server";
 import { consumeQuotaForApiKey, getMonthlyUsageStats, logUsage, validateAndConsumeApiKey } from "@/lib/validate-key";
 
 export async function POST(request: Request) {
-  const internalKey = getRequiredEnv("PLAYGROUND_API_KEY");
   let keyContext: { id: string; requestsLimit: number } | null = null;
   let resourceIdForLog: string | null = null;
 
@@ -23,6 +22,13 @@ export async function POST(request: Request) {
       await consumeQuotaForApiKey(keyRow.id, keyRow.requests_limit);
       keyContext = { id: keyRow.id, requestsLimit: keyRow.requests_limit };
     } else {
+      let internalKey = "";
+      try {
+        internalKey = getRequiredEnv("PLAYGROUND_API_KEY");
+      } catch {
+        throw new ApiError(500, "FETCH_FAILED", "PLAYGROUND_API_KEY is not configured.");
+      }
+
       keyContext = await validateAndConsumeApiKey(internalKey);
     }
 
@@ -61,6 +67,7 @@ export async function POST(request: Request) {
       { status: 200 },
     );
   } catch (error) {
+    console.error("Playground personalize request failed", error);
     const apiError = toApiError(error);
 
     if (keyContext) {
