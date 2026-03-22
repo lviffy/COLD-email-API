@@ -1,27 +1,23 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { FormEvent, useState } from "react";
 import { getBrowserSupabase } from "@/lib/supabase-browser";
 
 export default function LoginPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState(false);
+  const callbackError = searchParams.get("error") ?? "";
 
   function getRedirectTarget() {
-    const configuredAppUrl = process.env.NEXT_PUBLIC_APP_URL?.trim().replace(/\/$/, "");
-
-    if (window.location.hostname === "localhost") {
-      return `${window.location.origin}/auth/callback?next=%2Fdashboard`;
-    }
-
-    return `${configuredAppUrl || "https://yt-tscript.vercel.app"}/auth/callback?next=%2Fdashboard`;
+    return `${window.location.origin}/auth/callback?next=%2Fdashboard`;
   }
 
   async function handleGoogleLogin() {
@@ -121,7 +117,7 @@ export default function LoginPage() {
             </div>
           </div>
 
-          {error ? <p className="text-sm text-red-700">{error}</p> : null}
+          {error || callbackError ? <p className="text-sm text-red-700">{error || callbackError}</p> : null}
 
           <button
             type="submit"

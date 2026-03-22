@@ -155,5 +155,5 @@ Optional dev seed is in [supabase/seed.sql](supabase/seed.sql).
 
 For Google OAuth with Supabase, add these app redirect URLs in Supabase Auth URL configuration:
 
-- `https://your-template-app.vercel.app/auth/callback`
+- `https://your-api.vercel.app/auth/callback`
 - `http://localhost:3000/auth/callback` (local dev)
