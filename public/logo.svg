@@ -1,0 +1,8 @@
+<svg width="488" height="72" viewBox="0 0 488 72" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <g>
+    <rect x="4" y="8" width="56" height="56" rx="14" stroke="#1F6C60" stroke-width="4"/>
+    <path d="M28 24L46 36L28 48V24Z" fill="#1F6C60"/>
+  </g>
+  <text x="76" y="33" fill="#1F6C60" font-family="'Space Grotesk', sans-serif" font-size="20" font-weight="700" letter-spacing="0.6">API Template</text>
+  <text x="76" y="56" fill="#54605A" font-family="'Space Grotesk', sans-serif" font-size="16" font-weight="500" letter-spacing="0.2">API</text>
+</svg>
