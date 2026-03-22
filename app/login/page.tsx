@@ -1,20 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
-import { FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { FormEvent, useEffect, useState } from "react";
 import { getBrowserSupabase } from "@/lib/supabase-browser";
 
 export default function LoginPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [oauthLoading, setOauthLoading] = useState(false);
-  const callbackError = searchParams.get("error") ?? "";
+  const [callbackError, setCallbackError] = useState("");
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    setCallbackError(params.get("error") ?? "");
+  }, []);
 
   function getRedirectTarget() {
     return `${window.location.origin}/auth/callback?next=%2Fdashboard`;
