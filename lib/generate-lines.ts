@@ -14,7 +14,8 @@ type GenerateLinesInput = {
 };
 
 function getModelName() {
-  return process.env.GEMINI_MODEL || "gemini-3.1-flash-lite";
+  // Prefer a broadly available free-tier model when env is not set.
+  return process.env.GEMINI_MODEL || "gemini-2.0-flash-lite";
 }
 
 function getApiKey() {
